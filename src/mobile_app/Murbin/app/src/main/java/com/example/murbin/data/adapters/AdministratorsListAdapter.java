@@ -99,7 +99,7 @@ public class AdministratorsListAdapter extends FirestoreRecyclerAdapter<User, Ad
      * Cream the ViewHolder, with the elements to modify
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_full_name, tv_email;
+        public TextView tv_full_name;
 
         /**
          * Constructor
@@ -109,7 +109,6 @@ public class AdministratorsListAdapter extends FirestoreRecyclerAdapter<User, Ad
         public ViewHolder(View itemView) {
             super(itemView);
             tv_full_name = itemView.findViewById(R.id.administrator_subzones_list_recyclerview_element_tv_name);
-            //tv_email = itemView.findViewById(R.id.administrator_technicians_list_recyclerview_element_tv_email);
         }
 
         /**
@@ -118,9 +117,8 @@ public class AdministratorsListAdapter extends FirestoreRecyclerAdapter<User, Ad
          * @param user User
          */
         public void customizeView(User user) {
-            String full_name = user.getName();// + " " + user.getSurname();
+            String full_name = user.getName();
             tv_full_name.setText(full_name);
-            //tv_email.setText(user.getEmail());
         }
     }
 }

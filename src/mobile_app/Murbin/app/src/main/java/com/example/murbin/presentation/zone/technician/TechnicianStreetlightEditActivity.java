@@ -15,7 +15,6 @@ import com.example.murbin.BaseActivity;
 import com.example.murbin.R;
 import com.example.murbin.data.StreetlightsDatabaseCrud;
 import com.example.murbin.firebase.Auth;
-import com.example.murbin.models.GeoPoint;
 import com.example.murbin.models.Streetlight;
 import com.example.murbin.models.User;
 
@@ -25,10 +24,10 @@ public class TechnicianStreetlightEditActivity extends BaseActivity implements V
 
     private ViewGroup mContainer;
     private Toolbar mToolbar;
-    private String mMessage, mIdStreetlight, mIdSubzone;;
+    private String mMessage, mIdStreetlight, mIdSubzone;
     private Button m_btn_cancel, m_btn_save, m_btn_location;
     private StreetlightsDatabaseCrud mStreetlightsDatabaseCrud;
-    private GeoPoint location;
+    private com.google.firebase.firestore.GeoPoint location;
     private User mUser;
     private Streetlight mStreetlight;
 
@@ -94,6 +93,7 @@ public class TechnicianStreetlightEditActivity extends BaseActivity implements V
             case R.id.technician_streetlight_edit_btn_guardar: {
                 if (checkForm()) {
                     mStreetlight = new Streetlight(this.location, true);
+                    Log.d(App.DEFAULT_TAG, "mIdStreetlight: " + mIdStreetlight);
                     mStreetlightsDatabaseCrud.update(mIdStreetlight, mStreetlight.parseToMap(), response -> {
                         if (response) {
                             Intent intent = new Intent(TechnicianStreetlightEditActivity.this, TechnicianStreetlightsActivity.class);
@@ -130,9 +130,9 @@ public class TechnicianStreetlightEditActivity extends BaseActivity implements V
     /**
      * Sets the location of the Streetlight with the received Geoppoint as a parameter.
      *
-     * @param location Geopoint
+     * @param location com.google.firebase.firestore.GeoPoint
      */
-    public void setLocationStreetlight(GeoPoint location) {
+    public void setLocationStreetlight(com.google.firebase.firestore.GeoPoint location) {
         this.location = location;
         if (location.getLatitude() != 0.0 && location.getLongitude() != 0.0) {
             m_btn_location.setHint(location.getLatitude() + "" + location.getLongitude());

@@ -39,10 +39,13 @@ public class TechnicianStreetlightsActivity extends AppCompatActivity {
         setContentView(R.layout.technician_streetlight_list);
         initializeLayoutElements();
         if (savedInstanceState == null) {
-            StreetlightsListFragment subzonesListFragment = new StreetlightsListFragment();
-            subzonesListFragment.settings(mIdSubzone);
+            StreetlightsListFragment streetlightsListFragment = new StreetlightsListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("idSubzone", mIdSubzone);
+            streetlightsListFragment.setArguments(bundle);
+            streetlightsListFragment.settings(mIdSubzone);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.technician_streetlight_fragment, subzonesListFragment);
+            transaction.replace(R.id.technician_streetlight_fragment, streetlightsListFragment);
         }
     }
 
@@ -74,13 +77,6 @@ public class TechnicianStreetlightsActivity extends AppCompatActivity {
                 mIdSubzone = extras.getString("idSubzone", "");
             }
         }
-
-        StreetlightsListFragment streetlightsListFragment = new StreetlightsListFragment();
-        streetlightsListFragment.settings(mIdSubzone);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.technician_streetlight_fragment, streetlightsListFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     @Override

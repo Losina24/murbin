@@ -29,8 +29,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class TechnicianSubzoneActivity extends BaseActivity implements View.OnClickListener {
+
     public static MqttClient client = null;
     private final Auth mAuth = new Auth(this);
+
     private Toolbar mToolbar;
     private BottomNavigationView mBottomNavigationView;
     private ViewGroup mContainer;
@@ -76,6 +78,7 @@ public class TechnicianSubzoneActivity extends BaseActivity implements View.OnCl
             if (extras.containsKey("idSubzone")) {
                 mIdSubzone = extras.getString("idSubzone", "");
                 mTitle.setText(mIdSubzone);
+                Log.d("extra mIdSubzone", mIdSubzone);
             }
         }
 
@@ -146,12 +149,10 @@ public class TechnicianSubzoneActivity extends BaseActivity implements View.OnCl
                 break;
             }
             case R.id.technician_subzone_streetlights_container: {
-                Log.d(App.DEFAULT_TAG, "Pulsado technician_subzone_streetlights_container");
+                Log.d("mIdSubzone", mIdSubzone);
                 Intent intent = new Intent(this, TechnicianStreetlightsActivity.class);
                 intent.putExtra("idSubzone", mIdSubzone);
-                Log.d("mIdSubzone", mIdSubzone);
                 startActivity(intent);
-
 
                 break;
             }

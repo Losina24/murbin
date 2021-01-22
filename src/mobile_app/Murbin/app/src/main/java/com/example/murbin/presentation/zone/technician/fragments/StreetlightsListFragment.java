@@ -32,12 +32,17 @@ public class StreetlightsListFragment extends Fragment {
 
     private String mIdSubzone;
     private RecyclerView recyclerView;
-    private StreetlightsDatabaseCrud streetlightsDatabaseCrud;
+    private StreetlightsDatabaseCrud mStreetlightsDatabaseCrud;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true); // For onOptionsItemSelected to work
+        if (getActivity().getIntent().getExtras() != null) {
+            mIdSubzone = getActivity().getIntent().getExtras().getString("idSubzone");
+        }
+        Log.d(App.DEFAULT_TAG, "OnCreate idSubzone: " + mIdSubzone);
+        mStreetlightsDatabaseCrud = new StreetlightsDatabaseCrud(mIdSubzone);
     }
 
     @Override
@@ -51,19 +56,25 @@ public class StreetlightsListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        streetlightsListAdapter.startListening();
+        if (streetlightsListAdapter != null) {
+            streetlightsListAdapter.startListening();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        streetlightsListAdapter.stopListening();
+        if (streetlightsListAdapter != null) {
+            streetlightsListAdapter.stopListening();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        streetlightsListAdapter.stopListening();
+        if (streetlightsListAdapter != null) {
+            streetlightsListAdapter.stopListening();
+        }
     }
 
     /**
@@ -72,14 +83,19 @@ public class StreetlightsListFragment extends Fragment {
      * @param view View
      */
     private void initializeLayoutElements(View view) {
+//        Log.d(App.DEFAULT_TAG, "Enviado idSubzone: " + mIdSubzone);
+//        Log.d(App.DEFAULT_TAG, "Enviado mStreetlightsDatabaseCrud: " + mStreetlightsDatabaseCrud.toString());
+//        Log.d(App.DEFAULT_TAG, "mStreetlightsDatabaseCrud.getStreetlights(): " + mStreetlightsDatabaseCrud.getStreetlights());
         FirestoreRecyclerOptions<Streetlight> options = new FirestoreRecyclerOptions.Builder<Streetlight>()
-                .setQuery(streetlightsDatabaseCrud.getStreetlights(), Streetlight.class).build();
+                .setQuery(mStreetlightsDatabaseCrud.getStreetlights(), Streetlight.class).build();
 
         streetlightsListAdapter = new StreetlightsListAdapter(options, getContext());
         streetlightsListAdapter.setOnItemClickListener(v -> {
             int position = recyclerView.getChildAdapterPosition(v);
             String idStreetlight = streetlightsListAdapter.getId(position);
             Intent intent = new Intent(getContext(), TechnicianStreetlightEditActivity.class);
+            Log.d(App.DEFAULT_TAG, "Enviado idSubzone: " + mIdSubzone);
+            Log.d(App.DEFAULT_TAG, "Enviado idStreetlight: " + idStreetlight);
             intent.putExtra("idSubzone", mIdSubzone);
             intent.putExtra("idStreetlight", idStreetlight);
             startActivity(intent);
@@ -94,11 +110,10 @@ public class StreetlightsListFragment extends Fragment {
     }
 
     /**
-     * @param idSubzoneP Id from parent Subzone
+     * @param idSubzone Id from parent Subzone
      */
-    public void settings(String idSubzoneP) {
-//        Log.d(App.DEFAULT_TAG, "Recibido idSubzone: " + mIdSubzone);
-        mIdSubzone = idSubzoneP;
-        streetlightsDatabaseCrud = new StreetlightsDatabaseCrud(mIdSubzone);
+    public void settings(String idSubzone) {
+        Log.d(App.DEFAULT_TAG, "Recibido idSubzone: " + idSubzone);
+        mIdSubzone = idSubzone;
     }
 }

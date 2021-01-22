@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.murbin.R;
 import com.example.murbin.models.Streetlight;
-import com.example.murbin.models.User;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -114,10 +113,9 @@ public class StreetlightsListAdapter extends FirestoreRecyclerAdapter<Streetligh
 
         /**
          * Customize a View elements from a User
-         *
          */
-        public void customizeView(Streetlight streetlight , int position) {
-            String full_name = "Farola "+position;
+        public void customizeView(Streetlight streetlight, int position) {
+            String full_name = "Farola " + position;
             tv_full_name.setText(full_name);
         }
     }

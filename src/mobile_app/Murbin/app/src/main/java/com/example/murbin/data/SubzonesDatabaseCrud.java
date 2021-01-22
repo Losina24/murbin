@@ -90,10 +90,17 @@ public class SubzonesDatabaseCrud implements SubzonesDatabaseCrudRepository {
         }).addOnFailureListener(e -> deleteListener.onResponse(false));
     }
 
+    /**
+     * @return CollectionReference
+     */
     public CollectionReference getSubzones() {
         return subzones;
     }
 
+    /**
+     * @param listSubzones List<String>
+     * @return Query
+     */
     public Query getSubzonesFromTechnicians(List<String> listSubzones) {
         return subzones.whereIn("name", listSubzones);
     }

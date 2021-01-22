@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Streetlight {
 
-    private GeoPoint location;
+    private com.google.firebase.firestore.GeoPoint location;
     private boolean status;
 
     /**
@@ -24,28 +24,19 @@ public class Streetlight {
     /**
      * Constructor
      *
-     * @param status          Streetlight status [On/Off]
+     * @param location Geopoint
+     * @param status   Streetlight status [On/Off]
      */
-    public Streetlight(boolean status) {
-        this.status = status;
-    }
-
-    /**
-     * Constructor
-     *
-     * @param location        Geopoint
-     * @param status          Streetlight status [On/Off]
-     */
-    public Streetlight(GeoPoint location, boolean status) {
+    public Streetlight(com.google.firebase.firestore.GeoPoint location, boolean status) {
         this.location = location;
         this.status = status;
     }
 
-    public GeoPoint getGeoPoint() {
+    public com.google.firebase.firestore.GeoPoint getLocation() {
         return location;
     }
 
-    public void setGeoPoint(GeoPoint location) {
+    public void setLocation(com.google.firebase.firestore.GeoPoint location) {
         this.location = location;
     }
 
@@ -68,6 +59,7 @@ public class Streetlight {
     public Map<String, Object> parseToMap() {
         Map<String, Object> streetlightMap = new HashMap<>();
 
+        streetlightMap.put("status", status);
         streetlightMap.put("location", location);
 
         return streetlightMap;

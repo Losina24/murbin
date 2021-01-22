@@ -1,5 +1,8 @@
 package com.example.murbin.data;
 
+import android.util.Log;
+
+import com.example.murbin.App;
 import com.example.murbin.data.repositories.StreetlightsDatabaseCrudRepository;
 import com.example.murbin.models.Streetlight;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,7 +28,8 @@ public class StreetlightsDatabaseCrud implements StreetlightsDatabaseCrudReposit
         streetlights = db.collection("zones")
                 .document("Gandia")
                 .collection("subzones")
-                .document(idDocumentSubZone).collection("streetlights");
+                .document(idDocumentSubZone)
+                .collection("streetlights");
     }
 
     @Override
@@ -78,4 +82,5 @@ public class StreetlightsDatabaseCrud implements StreetlightsDatabaseCrudReposit
     public CollectionReference getStreetlights() {
         return streetlights;
     }
+
 }

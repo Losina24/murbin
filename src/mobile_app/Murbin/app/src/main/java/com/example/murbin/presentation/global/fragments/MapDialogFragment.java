@@ -205,8 +205,8 @@ public class MapDialogFragment extends androidx.fragment.app.DialogFragment
         }
         if (id == R.id.administrator_dialog_fragment_map_btn_cancel) {
 //            Log.d(App.DEFAULT_TAG, "Pulsado:" + "administrator_dialog_fragment_map_btn_cancel");
-            listGeoPoints.clear();
-            areaSubzone = new Area();
+//            listGeoPoints.clear();
+//            areaSubzone = new Area();
             switch (action) {
                 case "polygon": {
                     callSetAreaSubzoneCorrectly();
@@ -245,11 +245,11 @@ public class MapDialogFragment extends androidx.fragment.app.DialogFragment
     private void callSetLocationStreetlightCorrectly() {
         switch (this.originActivity) {
             case "TechnicianStreetlightCreateActivity": {
-                ((TechnicianStreetlightCreateActivity) getActivity()).setLocationStreetlight(location);
+                ((TechnicianStreetlightCreateActivity) getActivity()).setLocationStreetlight(new com.google.firebase.firestore.GeoPoint(location.getLatitude(), location.getLongitude()));
                 break;
             }
             case "TechnicianStreetlightEditActivity": {
-                ((TechnicianStreetlightEditActivity) getActivity()).setLocationStreetlight(location);
+                ((TechnicianStreetlightEditActivity) getActivity()).setLocationStreetlight(new com.google.firebase.firestore.GeoPoint(location.getLatitude(), location.getLongitude()));
                 break;
             }
         }
